@@ -15,7 +15,7 @@ pip install -r requirements.txt
 python app.py
 ```
 
-Open **http://localhost:5000** in your browser.
+Open https://knee-replacment-bot-1.onrender.com/ in your browser.
 
 ---
 
