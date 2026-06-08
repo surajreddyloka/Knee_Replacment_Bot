@@ -1,0 +1,20 @@
+<!-- templates/partials/header.html -->
+<header class="main-header" role="banner">
+  <nav class="navbar" aria-label="Main navigation">
+    <a href="/" class="nav-logo" aria-label="KneeBot Home">
+      <span class="logo-icon">🦴</span>
+      <span class="logo-text">KneeBot</span>
+    </a>
+
+    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu" aria-expanded="false" aria-controls="navMenu">
+      <span></span><span></span><span></span>
+    </button>
+
+    <ul class="nav-menu" id="navMenu" role="list">
+      <li><a href="/"           class="nav-link {% if request.endpoint == 'main.index'      %}active{% endif %}">🏠 Home</a></li>
+      <li><a href="/chatbot"    class="nav-link {% if request.endpoint == 'main.chatbot_page' %}active{% endif %}">🤖 Chatbot</a></li>
+      <li><a href="/assessment" class="nav-link {% if request.endpoint == 'main.assessment_page' %}active{% endif %}">📋 Assessment</a></li>
+      <li><a href="/dashboard"  class="nav-link {% if request.endpoint == 'main.dashboard_page' %}active{% endif %}">📊 Dashboard</a></li>
+    </ul>
+  </nav>
+</header>

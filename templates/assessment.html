@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="KneeBot Pre-Surgery Assessment — Get your personalised readiness score, BMI analysis, and risk evaluation."/>
+  <title>KneeBot — Pre-Surgery Assessment</title>
+  <link rel="stylesheet" href="/static/css/style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+{% include 'partials/header.html' %}
+
+<main class="assessment-page">
+  <div class="container">
+    <div class="page-header">
+      <h1 class="page-title">📋 Pre-Surgery Assessment</h1>
+      <p class="page-subtitle">Fill in your details to receive a personalised readiness score, BMI analysis, and tailored recommendations.</p>
+    </div>
+
+    <!-- Step Progress Bar -->
+    <div class="step-progress" aria-label="Form progress">
+      <div class="step-item active" id="step-ind-1">
+        <div class="step-circle">1</div>
+        <div class="step-label">Demographics</div>
+      </div>
+      <div class="step-line"></div>
+      <div class="step-item" id="step-ind-2">
+        <div class="step-circle">2</div>
+        <div class="step-label">Medical History</div>
+      </div>
+      <div class="step-line"></div>
+      <div class="step-item" id="step-ind-3">
+        <div class="step-circle">3</div>
+        <div class="step-label">Pain & Mobility</div>
+      </div>
+      <div class="step-line"></div>
+      <div class="step-item" id="step-ind-4">
+        <div class="step-circle">4</div>
+        <div class="step-label">Results</div>
+      </div>
+    </div>
+
+    <form id="assessmentForm" novalidate>
+
+      <!-- ── STEP 1: Demographics ──────────────────────────────────── -->
+      <div class="form-step active" id="formStep1">
+        <div class="glass-card form-card">
+          <h2>👤 Personal Information</h2>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="age">Age <span class="required">*</span></label>
+              <input type="number" id="age" name="age" min="18" max="100"
+                     placeholder="e.g. 65" required aria-required="true"
+                     aria-describedby="age-hint"/>
+              <small id="age-hint" class="field-hint">Typically 50–80 years for knee replacement</small>
+            </div>
+            <div class="form-group">
+              <label for="weight">Weight (kg) <span class="required">*</span></label>
+              <input type="number" id="weight" name="weight_kg" min="30" max="300" step="0.1"
+                     placeholder="e.g. 80" required aria-required="true"/>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="height">Height (cm) <span class="required">*</span></label>
+              <input type="number" id="height" name="height_cm" min="100" max="250" step="0.1"
+                     placeholder="e.g. 170" required aria-required="true"/>
+            </div>
+            <div class="form-group">
+              <label>Live BMI</label>
+              <div class="bmi-display glass-card" id="bmiDisplay" aria-live="polite">
+                <div class="bmi-value" id="bmiValue">—</div>
+                <div class="bmi-category" id="bmiCategory">Enter height &amp; weight</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bmi-meter" aria-hidden="true">
+            <div class="bmi-bar">
+              <div class="bmi-segment bmi-under">Under 18.5</div>
+              <div class="bmi-segment bmi-healthy">18.5–24.9</div>
+              <div class="bmi-segment bmi-over">25–29.9</div>
+              <div class="bmi-segment bmi-obese1">30–34.9</div>
+              <div class="bmi-segment bmi-obese2">35+</div>
+            </div>
+            <div class="bmi-pointer" id="bmiPointer"></div>
+          </div>
+
+          <div class="step-nav">
+            <button type="button" class="btn btn-primary" id="step1Next">Next: Medical History →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── STEP 2: Medical Conditions ───────────────────────────── -->
+      <div class="form-step" id="formStep2">
+        <div class="glass-card form-card">
+          <h2>🩺 Medical History</h2>
+          <p class="form-desc">Select all conditions that apply. These help us personalise your risk assessment.</p>
+
+          <div class="conditions-grid" role="group" aria-labelledby="conditions-label">
+            <span id="conditions-label" class="sr-only">Medical conditions</span>
+
+            <label class="condition-checkbox" for="c-diabetes">
+              <input type="checkbox" id="c-diabetes" name="conditions" value="diabetes"/>
+              <span class="checkbox-card">
+                <span class="checkbox-icon">🩸</span>
+                <span class="checkbox-label">Diabetes</span>
+              </span>
+            </label>
+
+            <label class="condition-checkbox" for="c-hypertension">
+              <input type="checkbox" id="c-hypertension" name="conditions" value="hypertension"/>
+              <span class="checkbox-card">
+                <span class="checkbox-icon">❤️</span>
+                <span class="checkbox-label">Hypertension</span>
+              </span>
+            </label>
+
+            <label class="condition-checkbox" for="c-heart">
+              <input type="checkbox" id="c-heart" name="conditions" value="heart_disease"/>
+              <span class="checkbox-card">
+                <span class="checkbox-icon">💓</span>
+                <span class="checkbox-label">Heart Disease</span>
+              </span>
+            </label>
+
+            <label class="condition-checkbox" for="c-copd">
+              <input type="checkbox" id="c-copd" name="conditions" value="copd"/>
+              <span class="checkbox-card">
+                <span class="checkbox-icon">🫁</span>
+                <span class="checkbox-label">COPD / Asthma</span>
+              </span>
+            </label>
+
+            <label class="condition-checkbox" for="c-kidney">
+              <input type="checkbox" id="c-kidney" name="conditions" value="kidney_disease"/>
+              <span class="checkbox-card">
+                <span class="checkbox-icon">🫘</span>
+                <span class="checkbox-label">Kidney Disease</span>
+              </span>
+            </label>
+
+            <label class="condition-checkbox" for="c-blood">
+              <input type="checkbox" id="c-blood" name="conditions" value="blood_disorder"/>
+              <span class="checkbox-card">
+                <span class="checkbox-icon">🩺</span>
+                <span class="checkbox-label">Blood Disorder</span>
+              </span>
+            </label>
+
+            <label class="condition-checkbox" for="c-osteo">
+              <input type="checkbox" id="c-osteo" name="conditions" value="osteoporosis"/>
+              <span class="checkbox-card">
+                <span class="checkbox-icon">🦴</span>
+                <span class="checkbox-label">Osteoporosis</span>
+              </span>
+            </label>
+
+            <label class="condition-checkbox" for="c-none">
+              <input type="checkbox" id="c-none" name="conditions" value="none"/>
+              <span class="checkbox-card">
+                <span class="checkbox-icon">✅</span>
+                <span class="checkbox-label">None of the above</span>
+              </span>
+            </label>
+          </div>
+
+          <div class="step-nav">
+            <button type="button" class="btn btn-ghost" id="step2Back">← Back</button>
+            <button type="button" class="btn btn-primary" id="step2Next">Next: Pain &amp; Mobility →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── STEP 3: Pain & Mobility ───────────────────────────────── -->
+      <div class="form-step" id="formStep3">
+        <div class="glass-card form-card">
+          <h2>😣 Pain &amp; Mobility Assessment</h2>
+
+          <div class="slider-group">
+            <label for="painSlider">
+              Current Pain Level
+              <span class="slider-value" id="painVal">5</span>/10
+            </label>
+            <div class="pain-icons" aria-hidden="true">😁 😊 😐 😟 😭</div>
+            <input type="range" id="painSlider" name="pain_level"
+                   min="0" max="10" value="5" step="1"
+                   aria-label="Pain level 0 to 10"
+                   aria-valuemin="0" aria-valuemax="10" aria-valuenow="5"/>
+            <div class="slider-labels">
+              <span>No Pain</span><span>Worst Possible</span>
+            </div>
+          </div>
+
+          <div class="slider-group">
+            <label for="mobilitySlider">
+              Mobility Score (how well can you move?)
+              <span class="slider-value" id="mobilityVal">5</span>/10
+            </label>
+            <div class="mobility-icons" aria-hidden="true">🛑 🚣 🚶 🏃 🏅</div>
+            <input type="range" id="mobilitySlider" name="mobility_score"
+                   min="0" max="10" value="5" step="1"
+                   aria-label="Mobility score 0 to 10"
+                   aria-valuemin="0" aria-valuemax="10" aria-valuenow="5"/>
+            <div class="slider-labels">
+              <span>Bed-bound</span><span>Fully Mobile</span>
+            </div>
+          </div>
+
+          <div class="step-nav">
+            <button type="button" class="btn btn-ghost" id="step3Back">← Back</button>
+            <button type="submit" class="btn btn-primary btn-submit" id="submitBtn">
+              <span id="submitText">🔍 Get My Assessment</span>
+              <span class="spinner" id="submitSpinner" hidden>⏳</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </form><!-- End Form -->
+
+    <!-- ── STEP 4: Results ─────────────────────────────────────────── -->
+    <div class="form-step" id="formStep4">
+      <div class="glass-card form-card results-card" aria-live="polite">
+        <h2>🎯 Your Assessment Results</h2>
+
+        <div class="results-grid">
+          <!-- BMI Result -->
+          <div class="result-item">
+            <div class="result-icon">⚖️</div>
+            <div class="result-label">Your BMI</div>
+            <div class="result-value" id="resBMI">—</div>
+            <div class="result-sub" id="resBMICat">—</div>
+          </div>
+
+          <!-- Readiness Score -->
+          <div class="result-item">
+            <div class="result-icon">🩺</div>
+            <div class="result-label">Readiness Score</div>
+            <div class="result-value" id="resScore">—</div>
+            <div class="result-sub">out of 100</div>
+          </div>
+
+          <!-- Risk Level -->
+          <div class="result-item">
+            <div class="result-icon">⚠️</div>
+            <div class="result-label">Risk Level</div>
+            <div class="result-value" id="resRisk">—</div>
+            <div class="result-sub" id="resRiskSub">—</div>
+          </div>
+        </div>
+
+        <!-- Readiness Gauge -->
+        <div class="readiness-gauge" aria-hidden="true">
+          <svg viewBox="0 0 200 110" class="gauge-svg">
+            <defs>
+              <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%"   stop-color="#EF4444"/>
+                <stop offset="40%"  stop-color="#F59E0B"/>
+                <stop offset="100%" stop-color="#10B981"/>
+              </linearGradient>
+            </defs>
+            <path d="M 15 100 A 85 85 0 0 1 185 100" fill="none" stroke="#1e293b" stroke-width="16"/>
+            <path id="gaugeArc" d="M 15 100 A 85 85 0 0 1 185 100" fill="none"
+                  stroke="url(#gaugeGrad)" stroke-width="16" stroke-dasharray="267" stroke-dashoffset="267"/>
+            <text x="100" y="95" text-anchor="middle" class="gauge-text" id="gaugeText">0</text>
+          </svg>
+        </div>
+
+        <!-- Recommendations -->
+        <div class="recommendations-section">
+          <h3>📌 Personalised Recommendations</h3>
+          <ul class="rec-list" id="recList" aria-label="Personalised recommendations"></ul>
+        </div>
+
+        <div class="results-actions">
+          <button type="button" class="btn btn-ghost" id="retakeBtn">↺ Retake Assessment</button>
+          <a href="/dashboard" class="btn btn-primary">📊 Go to Dashboard →</a>
+          <a href="/chatbot"  class="btn btn-secondary">🤖 Ask KneeBot</a>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /container -->
+</main>
+
+{% include 'partials/footer.html' %}
+
+<script src="/static/js/script.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    initAssessment();
+  });
+</script>
+</body>
+</html>

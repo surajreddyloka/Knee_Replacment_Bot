@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="KneeBot — Your intelligent knee replacement companion. Chatbot, assessment, recovery tracker and more."/>
+  <title>KneeBot — Intelligent Knee Replacement Platform</title>
+  <link rel="stylesheet" href="/static/css/style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <!-- AOS Animation Library -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+<body>
+
+{% include 'partials/header.html' %}
+
+<!-- ═══ HERO SECTION ═══════════════════════════════════════════════════════ -->
+<section class="hero" aria-labelledby="hero-heading">
+  <div class="hero-bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+  <div class="hero-content" data-aos="fade-right">
+    <div class="hero-badge">✨ Your Journey to Mobility Begins Here</div>
+    <h1 id="hero-heading" class="hero-title">
+      Regain Your <span class="gradient-text">Freedom.</span><br/>
+      Walk Without <span class="gradient-text">Limits.</span>
+    </h1>
+    <p class="hero-subtitle">
+      Knee replacement isn't just a surgery — it's a new chapter. We're here to guide your recovery with empathy, AI-driven insights, and a community of care.
+    </p>
+    <div class="hero-cta">
+      <a href="/chatbot"    class="btn btn-primary">🤖 Talk to KneeBot</a>
+      <a href="/assessment" class="btn btn-secondary">📋 Check Your Readiness</a>
+    </div>
+  </div>
+
+  <!-- Mini Chatbot Bubble -->
+  <div class="chat-bubble-widget" aria-label="Quick chat widget">
+    <div class="bubble-header">
+      <span class="bubble-avatar">🤖</span>
+      <div>
+        <strong>KneeBot</strong>
+        <span class="bubble-status">● Online</span>
+      </div>
+    </div>
+    <div class="bubble-messages" id="bubbleMessages">
+      <div class="bubble-msg bot-bubble">👋 Hi! I'm KneeBot. Ask me anything about knee replacement!</div>
+    </div>
+    <div class="bubble-input-row">
+      <input type="text" id="bubbleInput" class="bubble-input" placeholder="Ask a question..." aria-label="Quick question input"/>
+      <button class="bubble-voice" id="bubbleVoice" aria-label="Voice input">🎙️</button>
+      <button class="bubble-send" id="bubbleSend" aria-label="Send message">➤</button>
+    </div>
+    <a href="/chatbot" class="bubble-expand">Open Full Chat →</a>
+  </div>
+</section>
+
+<!-- ═══ FEATURE CARDS ══════════════════════════════════════════════════════ -->
+<section class="features-section" aria-labelledby="features-heading">
+  <div class="container">
+    <h2 id="features-heading" class="section-title">Everything You Need</h2>
+    <p class="section-subtitle">Comprehensive tools for every stage of your knee replacement journey</p>
+
+    <div class="features-grid">
+      <a href="/chatbot" class="feature-card" aria-label="AI Chatbot">
+        <div class="feature-icon">🤖</div>
+        <h3>Intelligent Chatbot</h3>
+        <p>Ask any question about knee replacement — pre-op guidance, post-op care, pain management, exercises, and more.</p>
+        <span class="feature-tag">25+ Topics</span>
+      </a>
+
+      <a href="/assessment" class="feature-card" aria-label="Pre-Surgery Assessment">
+        <div class="feature-icon">📋</div>
+        <h3>Pre-Surgery Assessment</h3>
+        <p>Complete our intelligent form to get your personalised readiness score, BMI analysis, and risk evaluation.</p>
+        <span class="feature-tag">AI Scoring</span>
+      </a>
+
+      <a href="/dashboard" class="feature-card" aria-label="Recovery Dashboard">
+        <div class="feature-icon">📊</div>
+        <h3>Recovery Tracker</h3>
+        <p>Log daily pain, swelling, walking, and exercises. Visualise your recovery with beautiful interactive charts.</p>
+        <span class="feature-tag">Chart.js Powered</span>
+      </a>
+
+      <a href="#exercises-heading" class="feature-card" aria-label="Exercise Guide">
+        <div class="feature-icon">🏋️</div>
+        <h3>Exercise Library</h3>
+        <p>Week-by-week physiotherapy exercises with text descriptions — from gentle ankle pumps to advanced strengthening.</p>
+        <span class="feature-tag">All Stages</span>
+      </a>
+
+      <a href="/chatbot?intent=emergency" class="feature-card" aria-label="Emergency Alerts" id="emergency-feature-card">
+        <div class="feature-icon">🚨</div>
+        <h3>Emergency Alerts</h3>
+        <p>Real-time detection of concerning symptoms — DVT, infection signs, breathing issues — with instant escalation prompts.</p>
+        <span class="feature-tag">24/7 Monitoring</span>
+      </a>
+
+      <a href="/chatbot?voice=true" class="feature-card" aria-label="Voice Interaction">
+        <div class="feature-icon">🎙️</div>
+        <h3>Voice Interaction</h3>
+        <p>Speak your question using the Web Speech API integration. Ideal for mobility-limited patients post-surgery.</p>
+        <span class="feature-tag">Web Speech API</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ RECOVERY MILESTONES ════════════════════════════════════════════════ -->
+<section class="milestones-section" aria-labelledby="milestones-heading">
+  <div class="container">
+    <h2 id="milestones-heading" class="section-title">Recovery Milestones</h2>
+    <p class="section-subtitle">A typical knee replacement recovery timeline</p>
+
+    <div class="milestone-timeline">
+      <div class="milestone-item" data-aos="day1">
+        <div class="milestone-icon">🏥</div>
+        <div class="milestone-content">
+          <h4>Day 1</h4>
+          <p>Walk with frame. Pain management begins.</p>
+        </div>
+      </div>
+      <div class="milestone-connector"></div>
+
+      <div class="milestone-item">
+        <div class="milestone-icon">🩹</div>
+        <div class="milestone-content">
+          <h4>Day 7</h4>
+          <p>Walk 100m. Wound check. Flexion ~60°.</p>
+        </div>
+      </div>
+      <div class="milestone-connector"></div>
+
+      <div class="milestone-item">
+        <div class="milestone-icon">✂️</div>
+        <div class="milestone-content">
+          <h4>Day 14</h4>
+          <p>Suture removal. One crutch. Walk 200m.</p>
+        </div>
+      </div>
+      <div class="milestone-connector"></div>
+
+      <div class="milestone-item">
+        <div class="milestone-icon">🚶</div>
+        <div class="milestone-content">
+          <h4>Week 6</h4>
+          <p>90°+ flexion. May drive. Most aids removed.</p>
+        </div>
+      </div>
+      <div class="milestone-connector"></div>
+
+      <div class="milestone-item">
+        <div class="milestone-icon">🏊</div>
+        <div class="milestone-content">
+          <h4>Month 3</h4>
+          <p>Cycling, swimming. Return to light work.</p>
+        </div>
+      </div>
+      <div class="milestone-connector"></div>
+
+      <div class="milestone-item">
+        <div class="milestone-icon">🏆</div>
+        <div class="milestone-content">
+          <h4>Month 12</h4>
+          <p>Full function. Annual X-ray review.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ EXERCISE SHOWCASE ══════════════════════════════════════════════════ -->
+<section class="exercises-section" aria-labelledby="exercises-heading">
+  <div class="container">
+    <h2 id="exercises-heading" class="section-title">Exercise Library</h2>
+    <p class="section-subtitle">Evidence-based rehabilitation exercises for every stage</p>
+
+    <div class="exercise-grid">
+      <div class="exercise-card">
+        <div class="exercise-anim" aria-hidden="true">🦵</div>
+        <h4>Ankle Pumps</h4>
+        <span class="exercise-week">Week 1+</span>
+        <p>Flex and point your foot up and down to improve circulation and prevent blood clots.</p>
+        <div class="exercise-detail">
+          <span>⏱ 10 reps</span><span>🔁 3× daily</span><span>😌 Low intensity</span>
+        </div>
+      </div>
+
+      <div class="exercise-card">
+        <div class="exercise-anim" aria-hidden="true">🏋️</div>
+        <h4>Quad Sets</h4>
+        <span class="exercise-week">Week 1+</span>
+        <p>Press the back of your knee into the bed and hold for 5 seconds to activate quadriceps.</p>
+        <div class="exercise-detail">
+          <span>⏱ 10 reps</span><span>🔁 3× daily</span><span>😊 Easy</span>
+        </div>
+      </div>
+
+      <div class="exercise-card">
+        <div class="exercise-anim" aria-hidden="true">📐</div>
+        <h4>Heel Slides</h4>
+        <span class="exercise-week">Week 1+</span>
+        <p>Slide your heel toward your buttock to gently improve knee flexion range of motion.</p>
+        <div class="exercise-detail">
+          <span>⏱ 10 reps</span><span>🔁 2× daily</span><span>😊 Easy</span>
+        </div>
+      </div>
+
+      <div class="exercise-card">
+        <div class="exercise-anim" aria-hidden="true">🚴</div>
+        <h4>Stationary Cycling</h4>
+        <span class="exercise-week">Week 6+</span>
+        <p>Low-impact cycling to improve knee flexion, muscle strength and cardiovascular fitness.</p>
+        <div class="exercise-detail">
+          <span>⏱ 10–20 min</span><span>🔁 Daily</span><span>💪 Moderate</span>
+        </div>
+      </div>
+
+      <div class="exercise-card">
+        <div class="exercise-anim" aria-hidden="true">🌊</div>
+        <h4>Hydrotherapy</h4>
+        <span class="exercise-week">Week 6+</span>
+        <p>Water-based exercises reduce joint load while building strength and improving mobility.</p>
+        <div class="exercise-detail">
+          <span>⏱ 30 min</span><span>🔁 2× week</span><span>💪 Moderate</span>
+        </div>
+      </div>
+
+      <div class="exercise-card">
+        <div class="exercise-anim" aria-hidden="true">⬇️</div>
+        <h4>Mini Squats</h4>
+        <span class="exercise-week">Week 8+</span>
+        <p>Shallow squats to 45° strengthen quads and glutes, improving functional movement.</p>
+        <div class="exercise-detail">
+          <span>⏱ 10 reps</span><span>🔁 2× daily</span><span>🔥 Challenging</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ QUICK STATS BANNER ════════════════════════════════════════════════ -->
+<section class="stats-banner" aria-label="Platform statistics">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stats-item">
+        <div class="stats-icon">🦴</div>
+        <div class="stats-num" id="counterA" data-target="800000">0</div>
+        <div class="stats-label">Knee Replacements/Year (US)</div>
+      </div>
+      <div class="stats-item">
+        <div class="stats-icon">✅</div>
+        <div class="stats-num">95%</div>
+        <div class="stats-label">Patient Satisfaction Rate</div>
+      </div>
+      <div class="stats-item">
+        <div class="stats-icon">📅</div>
+        <div class="stats-num">15+</div>
+        <div class="stats-label">Years Implant Longevity</div>
+      </div>
+      <div class="stats-item">
+        <div class="stats-icon">🔬</div>
+        <div class="stats-num">25+</div>
+        <div class="stats-label">Chatbot Health Topics</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% include 'partials/footer.html' %}
+
+<script src="/static/js/script.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  // Homepage mini chatbot bubble
+  document.addEventListener('DOMContentLoaded', () => {
+    AOS.init({
+      duration: 1000,
+      once: true,
+      easing: 'ease-out-back'
+    });
+    initBubbleChat('bubbleInput', 'bubbleSend', 'bubbleMessages');
+    animateCounters();
+    initGlobalVoiceTriggers();
+  });
+</script>
+</body>
+</html>

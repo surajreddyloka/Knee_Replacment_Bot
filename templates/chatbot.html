@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="KneeBot AI Chatbot — Ask anything about knee replacement surgery and recovery."/>
+  <title>KneeBot — AI Chatbot</title>
+  <link rel="stylesheet" href="/static/css/style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+{% include 'partials/header.html' %}
+
+<main class="chatbot-page" aria-label="AI Chatbot Interface">
+  <div class="chatbot-layout">
+
+    <!-- ── Sidebar ─────────────────────────────────────────────────── -->
+    <aside class="chatbot-sidebar" aria-label="Suggested topics">
+      <h3 class="sidebar-title">💡 Suggested Topics</h3>
+      <div class="suggested-chips">
+        <button class="chip" data-q="What is knee replacement surgery?">What is knee replacement?</button>
+        <button class="chip" data-q="How long does recovery take?">Recovery timeline</button>
+        <button class="chip" data-q="What exercises should I do after surgery?">Post-op exercises</button>
+        <button class="chip" data-q="What are the signs of infection?">Infection signs</button>
+        <button class="chip" data-q="How do I manage pain after surgery?">Pain management</button>
+        <button class="chip" data-q="What foods should I eat to recover faster?">Diet & nutrition</button>
+        <button class="chip" data-q="When can I drive after knee replacement?">Driving after surgery</button>
+        <button class="chip" data-q="What are the recovery milestones?">Recovery milestones</button>
+        <button class="chip" data-q="How do I manage swelling in my knee?">Managing swelling</button>
+        <button class="chip" data-q="When should I see a doctor after surgery?">When to see doctor</button>
+        <button class="chip" data-q="What is my BMI and how does it affect surgery?">BMI and surgery</button>
+        <button class="chip" data-q="What sports can I do after knee replacement?">Sports & recreation</button>
+      </div>
+
+      <div class="sidebar-info glass-card">
+        <h4>📌 About KneeBot</h4>
+        <p>KneeBot uses AI-powered keyword matching across 25+ medical topics. All data stays local — no external API calls.</p>
+        <p class="sidebar-disclaimer">⚠️ Not a substitute for professional medical advice.</p>
+      </div>
+    </aside>
+
+    <!-- ── Chat Window ─────────────────────────────────────────────── -->
+    <section class="chatbot-window" aria-label="Chat messages">
+      <div class="chat-topbar">
+        <div class="chat-avatar">🤖</div>
+        <div class="chat-info">
+          <strong>KneeBot AI Assistant</strong>
+          <span class="online-dot">● Online — Ready to help</span>
+        </div>
+        <button class="btn-icon" id="voiceBtn"   aria-label="Voice input" title="Voice input">🎙️</button>
+        <button class="btn-icon" id="clearChatBtn" aria-label="Clear chat" title="Clear chat">🗑️</button>
+      </div>
+
+      <!-- Emergency Banner (hidden by default) -->
+      <div class="emergency-banner" id="emergencyBanner" hidden role="alert" aria-live="assertive">
+        🚨 <strong>Emergency Detected!</strong> Please call <strong>911</strong> or go to your nearest Emergency Room immediately!
+        <button class="emergency-close" id="emergencyClose" aria-label="Dismiss emergency banner">✕</button>
+      </div>
+
+      <!-- Messages Container -->
+      <div class="messages-container" id="messagesContainer" role="log" aria-live="polite" aria-label="Chat history">
+        <!-- Welcome message -->
+        <div class="message bot-message">
+          <div class="message-avatar">🤖</div>
+          <div class="message-bubble">
+            <p>👋 Hello! I'm KneeBot, your intelligent knee replacement assistant.</p>
+            <p>I can help with <strong>pre-surgery preparation</strong>, <strong>post-op care</strong>, <strong>pain management</strong>, <strong>physiotherapy</strong>, <strong>diet</strong>, and much more.</p>
+            <p>How can I help you today?</p>
+            <span class="message-time">Now</span>
+          </div>
+        </div>
+
+        {% for msg in messages %}
+        <div class="message {{ 'user-message' if msg.role == 'user' else 'bot-message' }}">
+          <div class="message-avatar">{{ '👤' if msg.role == 'user' else '🤖' }}</div>
+          <div class="message-bubble">
+            {{ msg.content | safe }}
+            <span class="message-time message-time--history">{{ msg.timestamp[:16] }}</span>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- Typing indicator (hidden initially) -->
+      <div class="typing-indicator" id="typingIndicator" hidden aria-label="KneeBot is typing">
+        <div class="message-avatar">🤖</div>
+        <div class="typing-dots">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+
+      <!-- Input Row -->
+      <div class="chat-input-row">
+        <div class="chat-input-wrapper">
+          <textarea
+            id="chatInput"
+            class="chat-input"
+            placeholder="Ask about knee replacement, recovery, exercises..."
+            rows="1"
+            aria-label="Type your message"
+            maxlength="500"
+          ></textarea>
+          <span class="char-counter" id="charCounter">0/500</span>
+        </div>
+        <button class="btn-send" id="sendBtn" aria-label="Send message">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20" aria-hidden="true">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+          </svg>
+        </button>
+      </div>
+      <p class="input-hint">Press <kbd>Enter</kbd> to send · <kbd>Shift+Enter</kbd> for new line · 🎙️ for voice</p>
+    </section>
+  </div>
+</main>
+
+{% include 'partials/footer.html' %}
+
+<script src="/static/js/script.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    initFullChat({
+      inputId:     'chatInput',
+      sendBtnId:   'sendBtn',
+      containerId: 'messagesContainer',
+      typingId:    'typingIndicator',
+      chipsClass:  'chip',
+      voiceBtnId:  'voiceBtn',
+      clearBtnId:  'clearChatBtn',
+      emergencyId: 'emergencyBanner',
+      emergencyCloseId: 'emergencyClose',
+      charCounterId: 'charCounter',
+    });
+  });
+</script>
+</body>
+</html>
