@@ -44,8 +44,9 @@ def create_app() -> Flask:
 # Entry Point
 # ---------------------------------------------------------------------------
 
+app = create_app()
+
 if __name__ == "__main__":
-    app = create_app()
     print("\n🦴 KneeBot Platform is running!")
     print("🌐 Open http://localhost:5001 in your browser\n")
     app.run(host="0.0.0.0", port=5001, debug=True)
